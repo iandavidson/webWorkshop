@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <title>Cool Web Page</title>
+  </head>
+  <body>
+    <h1>Hello There</h1>
+
+
+    <button type="button" id="myButton" >Click Me!</button>
+    <script type="text/javascript">
+
+      var dogUrl = "";
+      document.getElementById("myButton").addEventListener("click", function(){
+        //16777215 is the value of ffffff but in base 10
+        var ColorValue = '#' + Math.floor(Math.random()*16777215).toString(16);
+        document.body.style.backgroundColor = ColorValue;
+
+        getNewDog();
+        // alert("hello")
+      });
+
+      function getNewDog(){
+        //hit dog api
+        var request = new XMLHttpRequest();
+
+        request.open('GET', 'https://dog.ceo/api/breeds/image/random', true);
+
+        request.onload = function () {
+          // Begin accessing JSON data here
+          var data = JSON.parse(this.response);
+
+          dogUrl = data.message;
+
+        }
+
+        request.send();
+
+        var url = dogUrl;
+          $.ajax({
+              url : url,
+              cache: true,
+              processData : false
+          }).always(function(){
+              $("#pictureSpot").attr("src", url).fadeIn();
+          });
+        //throw image tag into $("pictureSpot")
+      }
+
+
+
+
+    </script>
+    <div>
+      <img id="pictureSpot">
+    </div>
+  </body>
+</html>
