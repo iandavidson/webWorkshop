@@ -2,6 +2,8 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+
+    <!-- Imports jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
@@ -28,26 +30,30 @@
         //hit dog api
         var request = new XMLHttpRequest();
 
-        request.open('GET', 'https://dog.ceo/api/breeds/image/random', true);
+        request.open('GET', 'https://56apbqwi8b.execute-api.us-west-1.amazonaws.com/production/csclub/dog', true);
+        //request.open('GET', 'https://dog.ceo/api/breeds/image/random', true);
+
 
         request.onload = function () {
           // Begin accessing JSON data here
           var data = JSON.parse(this.response);
 
-          dogUrl = data.message;
+          dogUrl = data.body.message;
 
         }
 
         request.send();
 
         var url = dogUrl;
-          $.ajax({
-              url : url,
-              cache: true,
-              processData : false
-          }).always(function(){
-              $("#pictureSpot").attr("src", url).fadeIn();
-          });
+        //properties of ajax call made
+        $.ajax({
+            url : url,
+            cache: true,
+            processData : false
+        }).always(function(){
+          //code to execute after request everytime
+            $("#pictureSpot").attr("src", url).fadeIn();
+        });
         //throw image tag into $("pictureSpot")
       }
 
